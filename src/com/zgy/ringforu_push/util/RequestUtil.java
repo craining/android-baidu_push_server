@@ -33,17 +33,27 @@ public class RequestUtil {
 
 	public PushMessageResponse pushMessage(final String tag, final String title, final String content, final String picTag, boolean isPost) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		// TODO 请求参数
-
-		// String message =
-		// "{\"title\":\"hello\",\"description:\"hello world\",\"pkg_name\": \"com.zgy.ringforu\",\"custom_content\": {\"title\":\"value1\",\"content\":\"value2\"}}";
-		String message = "{\"description\":\"hello world\",\"custom_content\":{\"title\":\"value1\",\"content\":\"value2\"}}";
 
 		String id = String.valueOf(TimeUtil.getCurrentTimeMillis());
+
+		// params.add(new BasicNameValuePair("apikey", "Ljc710pzAa99GULCo8y48NvB"));
+		// params.add(new BasicNameValuePair("device_type", "3"));
+		// params.add(new BasicNameValuePair("messages", "\"{\"title\":\"\",\"description\":\"test\"}\""));
+		// params.add(new BasicNameValuePair("method", "push_msg"));
+		// params.add(new BasicNameValuePair("msg_keys", id));
+		// params.add(new BasicNameValuePair("push_type", "1"));
+		// params.add(new BasicNameValuePair("sign", "8777F555E8C16715EBA5C85341684C58"));
+		// params.add(new BasicNameValuePair("timestamp", id));
+
+		// TODO 请求参数
+
+//		String message = "{\"custom_content\":{\"content\":\"value2\",\"title\":\"value1\"},\"description\":\"hello world\",\"title\":\"title\"}";
+		String message = "{\"description\":\"hello world\",\"title\":\"title\"}";
+
 		params.add(new BasicNameValuePair("apikey", "zv2f7R1Q2bqcBK3SYZoNq8Zq"));
 		params.add(new BasicNameValuePair("device_type", "3"));
-		params.add(new BasicNameValuePair("message_expires", "86400"));
-		params.add(new BasicNameValuePair("message_type", "0"));
+		// params.add(new BasicNameValuePair("message_expires", "86400"));
+		params.add(new BasicNameValuePair("message_type", "1"));
 		params.add(new BasicNameValuePair("messages", message));
 		params.add(new BasicNameValuePair("method", "push_msg"));
 		params.add(new BasicNameValuePair("msg_keys", id));
@@ -58,11 +68,14 @@ public class RequestUtil {
 			buffer.append("=");
 			buffer.append(value.getValue());
 		}
-		buffer.append("v=tKTSwji6lDP4hmBHtu2GAycdRGz48LyA");
+		buffer.append("tKTSwji6lDP4hmBHtu2GAycdRGz48LyA");
 		String sign = buffer.toString();
 		Log.e("", "sing=" + sign);
+
 		try {
-			params.add(new BasicNameValuePair("sign", MD5Util.getMD5String(URLEncoder.encode(sign, "utf-8"))));
+			String encodeSing = MD5Util.getMD5String(URLEncoder.encode(sign, "utf-8"));
+			Log.e("", "encodeSing=" + encodeSing);
+			params.add(new BasicNameValuePair("sign", encodeSing));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
